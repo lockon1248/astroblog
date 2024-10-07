@@ -1,0 +1,39 @@
+---
+import '../pages/styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const pageTitle = '關於我';
+const authorInfo = {
+	name: '鐵人雜魚',
+	occupation: '前端菜鳥',
+	hobby: ['吃東西', '看電影', '露營']
+};
+const skill = ['html', 'css', 'git', 'JavaScript', 'vue'];
+const islaoding = true;
+let skillColor = 'purple';
+let fontWeight = '700';
+let textCase = 'uppercase';
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<h2>關於我</h2>
+	<p>我是{authorInfo.name}</p>
+	<p>我是一個{authorInfo.occupation}</p>
+	<p>我的網頁開發技能:</p>
+	<ul>
+		{skill.map((item) => <li class="skill">{item}</li>)}
+	</ul>
+	<h2>{islaoding ? '讀取中' : '讀取完畢'}</h2>
+	<h2>{islaoding && '讀取中...'}</h2>
+</BaseLayout>
+
+<style define:vars={{ skillColor: skillColor, fontWeight: fontWeight, textCase: textCase }}>
+	h1 {
+		color: blue;
+		font-size: 30px;
+	}
+	.skill {
+		color: var(--skillColor);
+		font-weight: var(--fontWeight);
+		text-transform: var(--textCase);
+	}
+</style>

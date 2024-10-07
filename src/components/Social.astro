@@ -1,0 +1,14 @@
+---
+const { siteUrl, siteUrlTitle } = Astro.props;
+---
+
+<a href=`https://www.${siteUrl}.com`>{siteUrlTitle}</a>
+
+<style>
+	a {
+		padding: 0.5rem 1rem;
+		color: white;
+		background-color: purple;
+		text-decoration: none;
+	}
+</style>

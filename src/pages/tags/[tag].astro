@@ -1,0 +1,31 @@
+---
+import BlogPost from '../../components/BlogPost.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+// 在頁面加载時执行. 會返回 [{'標籤1':包含標籤1的文章}, {'標籤2':包含標籤2的文章}]
+export async function getStaticPaths() {
+	// 取得所有文章
+	const allPosts = await Astro.glob('../posts/*.md');
+
+	// 取得所有標籤
+	const tags = allPosts.map((post) => post.frontmatter.tags);
+	const flatTags = tags.flat();
+	const uniqueTags = [...new Set(flatTags)];
+
+
+	// 取得標籤相對應的文章
+	return uniqueTags.map((tag) => {
+		const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
+		return { params: { tag }, props: { posts: filteredPosts } };
+	});
+}
+---
+
+<BaseLayout pageTitle={tag}>
+	<p>所有包含{tag}的文章列表</p>
+	<ul>
+		{posts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+	</ul>
+</BaseLayout>
